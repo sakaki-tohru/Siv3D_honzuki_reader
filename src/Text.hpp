@@ -20,7 +20,7 @@ namespace Text {
         }
 
         auto draw(const Font& font, int x, int y) const {
-            font(text).draw(x, y);
+            FontAsset(U"font")(text).draw(x, y);
         }
     };
 }

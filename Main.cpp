@@ -14,6 +14,8 @@ void Main()
 	// 背景を水色にする
 	Scene::SetBackground(ColorF(0.5, 0.6, 7.0));
 
+	FontAsset::Register(U"font", 20);
+
 	const Font font(20);
 
 	//読んでいる話数
