@@ -19,7 +19,7 @@ namespace Text {
             updateText(fileNum);
         }
 
-        auto draw(const Font& font, int x, int y) const {
+        auto draw(int x, int y) const {
             FontAsset(U"font")(text).draw(x, y);
         }
     };
