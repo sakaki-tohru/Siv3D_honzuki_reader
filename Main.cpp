@@ -8,6 +8,16 @@ size_t round(size_t now) {
 	return now;
 }
 
+auto addLineText(String& allText, const String& line) {
+	const size_t splitsize = 37;
+	size_t old = 0;
+	while (line.size()>old) {
+		allText += line.substr(old, Min(splitsize,line.size()-old));
+		allText += U"\n";
+		old += splitsize;
+	}
+}
+
 auto readText(const String& filename) {
 	auto reader = TextReader();
 	reader.open(filename);
@@ -17,12 +27,12 @@ auto readText(const String& filename) {
 	String line;
 	String allText = U"";
 	while (reader.readLine(line)) {
-		allText += U"{}\n"_fmt(line);
+		addLineText(allText, line);
 	}
 	return allText;
 }
 
-auto constructFilename(int num) {
+auto constructFilename(size_t num) {
 	static const String Title = U"honzuki/N4830BU-";
 	return Title + U"{:0>5}"_fmt(num) + U".txt";
 }
@@ -52,7 +62,7 @@ void Main()
 		// マウスカーソルに追従する半透明の赤い円を描く
 		Circle(Cursor::Pos(), 10).draw(ColorF(1, 0, 0, 0.5));
 
-		font(text).draw(10, fontYpos);
+		font(text).draw(30, fontYpos);
 		fontYpos-=v;
 
 		// ボタンが押されたら
@@ -72,6 +82,6 @@ void Main()
 			v = 0.0;
 		}
 		//スライド
-		SimpleGUI::Slider(U"読む速度", v, -10.0, 10.0, Vec2(270, 20));
+		SimpleGUI::Slider(U"読む速度", v, -5.0, 5.0, Vec2(270, 20));
 	}
 }
