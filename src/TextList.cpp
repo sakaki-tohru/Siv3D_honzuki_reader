@@ -22,4 +22,8 @@ namespace Text {
         text.draw(x, y);
     }
 
+    void TextList::draw(const Vec2& pos) const {
+        this->draw(pos.x, pos.y);
+    }
+
 }

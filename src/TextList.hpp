@@ -18,6 +18,7 @@ namespace Text {
 
         // •`‰æ
         void draw(int x, int y)const;
+        void draw(const Vec2& pos)const;
 
     };
 

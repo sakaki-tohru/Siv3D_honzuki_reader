@@ -1,7 +1,8 @@
 ﻿
 # include <Siv3D.hpp> // OpenSiv3D v0.4.3
 #include "./src/TextList.hpp"
-#include ".git/src/Speed.hpp"
+#include "./src/Speed.hpp"
+#include "./src/TextPosition.hpp"
 
 void Main()
 {
@@ -14,7 +15,7 @@ void Main()
 	Speed speed(0.0);
 
 	// textのy座標
-	auto fontYpos = 60.0;
+	auto textPos = TextPosition({30.0, 60.0});
 
 	// 最初のテキストを読み込み
 	auto text = Text::TextList();
@@ -24,21 +25,21 @@ void Main()
 		// マウスカーソルに追従する半透明の赤い円を描く
 		Circle(Cursor::Pos(), 10).draw(ColorF(1, 0, 0, 0.5));
 
-		text.draw(30, fontYpos);
-		fontYpos -= speed.get();
+		text.draw(textPos.getPos());
+		textPos.updatePosUsingSpeed(speed);
 
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Next Story", Vec2(600, 20)))
 		{
 			text.increment();
-			fontYpos = 60.0;
+			textPos = TextPosition();
 			speed.reset();
 		}
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Prev Story", Vec2(10, 20)))
 		{
 			text.decrement();
-			fontYpos = 60.0;
+			textPos = TextPosition();
 			speed.reset();
 		}
 		//スライド

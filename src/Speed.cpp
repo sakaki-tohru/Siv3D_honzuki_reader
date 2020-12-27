@@ -8,7 +8,7 @@ void Speed::reset() {
 	readspeed = 0.0;
 }
 
-double Speed::get() {
+double Speed::get() const{
 	return readspeed;
 }
 
