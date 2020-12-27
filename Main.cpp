@@ -1,7 +1,7 @@
 ﻿
 # include <Siv3D.hpp> // OpenSiv3D v0.4.3
 #include "./src/TextList.hpp"
-
+#include ".git/src/Speed.hpp"
 
 void Main()
 {
@@ -11,7 +11,7 @@ void Main()
 	FontAsset::Register(U"font", 20);
 
 	//読む速度
-	double v = 0.0;
+	Speed speed(0.0);
 
 	// textのy座標
 	auto fontYpos = 60.0;
@@ -25,23 +25,23 @@ void Main()
 		Circle(Cursor::Pos(), 10).draw(ColorF(1, 0, 0, 0.5));
 
 		text.draw(30, fontYpos);
-		fontYpos-=v;
+		fontYpos -= speed.get();
 
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Next Story", Vec2(600, 20)))
 		{
 			text.increment();
 			fontYpos = 60.0;
-			v = 0.0;
+			speed.reset();
 		}
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Prev Story", Vec2(10, 20)))
 		{
 			text.decrement();
 			fontYpos = 60.0;
-			v = 0.0;
+			speed.reset();
 		}
 		//スライド
-		SimpleGUI::Slider(U"読む速度", v, -5.0, 5.0, Vec2(270, 20));
+		speed.adjust();
 	}
 }
