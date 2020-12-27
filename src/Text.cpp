@@ -11,6 +11,7 @@ namespace Text {
             old += splitsize;
         }
     }
+
     String readText(const String& filename) {
         auto reader = TextReader();
         reader.open(filename);
@@ -24,8 +25,21 @@ namespace Text {
         }
         return allText;
     }
+
     String constructFilename(size_t num) {
         static const String Title = U"honzuki/N4830BU-";
         return Title + U"{:0>5}"_fmt(num) + U".txt";
+    }
+
+    auto Text::updateText(size_t fileNum) {
+        text = readText(constructFilename(fileNum));
+    }
+
+    Text::Text(size_t fileNum) {
+        updateText(fileNum);
+    }
+
+    void Text::draw(int x, int y) const {
+        FontAsset(U"font")(text).draw(x, y);
     }
 }

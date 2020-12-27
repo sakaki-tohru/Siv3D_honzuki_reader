@@ -10,9 +10,6 @@ void Main()
 
 	FontAsset::Register(U"font", 20);
 
-	//読んでいる話数
-	size_t now = 1;
-
 	//読む速度
 	double v = 0.0;
 

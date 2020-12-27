@@ -9,18 +9,15 @@ namespace Text {
 
 
     class Text {
+        // 全てのテキスト
         String text;
 
-        auto updateText(size_t fileNum) {
-            text = readText(constructFilename(fileNum));
-        }
+        // テキストをfileNumのものに更新
+        auto updateText(size_t fileNum);
     public:
-        Text(size_t fileNum) {
-            updateText(fileNum);
-        }
+        Text(size_t fileNum);
 
-        auto draw(int x, int y) const {
-            FontAsset(U"font")(text).draw(x, y);
-        }
+        // 描画
+        void draw(int x, int y) const;
     };
 }
