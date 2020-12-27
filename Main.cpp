@@ -1,5 +1,6 @@
 ﻿
 # include <Siv3D.hpp> // OpenSiv3D v0.4.3
+#include "./src/Text.hpp"
 
 size_t round(size_t now) {
 	if (now == 0) return 1;
@@ -8,41 +9,11 @@ size_t round(size_t now) {
 	return now;
 }
 
-auto addLineText(String& allText, const String& line) {
-	const size_t splitsize = 37;
-	size_t old = 0;
-	while (line.size()>old) {
-		allText += line.substr(old, Min(splitsize,line.size()-old));
-		allText += U"\n";
-		old += splitsize;
-	}
-}
-
-auto readText(const String& filename) {
-	auto reader = TextReader();
-	reader.open(filename);
-	if (!reader) {
-		throw Error(U"Failed to open .txt");
-	}
-	String line;
-	String allText = U"";
-	while (reader.readLine(line)) {
-		addLineText(allText, line);
-	}
-	return allText;
-}
-
-auto constructFilename(size_t num) {
-	static const String Title = U"honzuki/N4830BU-";
-	return Title + U"{:0>5}"_fmt(num) + U".txt";
-}
-
 void Main()
 {
 	// 背景を水色にする
 	Scene::SetBackground(ColorF(0.5, 0.6, 7.0));
 
-	// 大きさ 20 のフォントを用意
 	const Font font(20);
 
 	//読んでいる話数
@@ -55,21 +26,21 @@ void Main()
 	auto fontYpos = 60.0;
 
 	// 最初のテキストを読み込み
-	auto text = readText(constructFilename(now));
+	auto text = Text::Text(1);
 
 	while (System::Update())
 	{
 		// マウスカーソルに追従する半透明の赤い円を描く
 		Circle(Cursor::Pos(), 10).draw(ColorF(1, 0, 0, 0.5));
 
-		font(text).draw(30, fontYpos);
+		text.draw(font,30, fontYpos);
 		fontYpos-=v;
 
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Next Story", Vec2(600, 20)))
 		{
 			now = round(now + 1);
-			text = readText(constructFilename(now));
+			text = Text::Text(now);
 			fontYpos = 60.0;
 			v = 0.0;
 		}
@@ -77,7 +48,7 @@ void Main()
 		if (SimpleGUI::Button(U"Prev Story", Vec2(10, 20)))
 		{
 			now = round(now - 1);
-			text = readText(constructFilename(now));
+			text = Text::Text(now);
 			fontYpos = 60.0;
 			v = 0.0;
 		}
