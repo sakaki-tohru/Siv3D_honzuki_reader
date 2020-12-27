@@ -33,14 +33,14 @@ void Main()
 		{
 			text.increment();
 			textPos = TextPosition();
-			speed.reset();
+			speed = Speed();
 		}
 		// ボタンが押されたら
 		if (SimpleGUI::Button(U"Prev Story", Vec2(10, 20)))
 		{
 			text.decrement();
 			textPos = TextPosition();
-			speed.reset();
+			speed = Speed();
 		}
 		//スライド
 		speed.adjust();

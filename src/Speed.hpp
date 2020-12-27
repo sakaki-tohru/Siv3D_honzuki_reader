@@ -7,7 +7,6 @@ public:
 	Speed();
 	Speed(const double& speed);
 
-	void reset();
 	double get()const;
 	void adjust();
 };
